@@ -27,6 +27,7 @@ TV_GEN_DIR = 9
 # board.set_pin_mode(TV_REL_DIR, Constants.OUTPUT)
 # board.set_pin_mode(TV_GEN_CTRL, Constants.PWM)
 # board.set_pin_mode(TV_GEN_DIR, Constants.OUTPUT)
+
 def about():
    msgbox.insert(INSERT,"Copyleft 2023 RC&C AB Company\n")
    root.update()
@@ -230,15 +231,15 @@ def chkBttn4():
 
 root = Tk()
 
-root.geometry("800x600")
+root.geometry("480x640")
 frame = Frame(root)
 frame.pack()
 
 # leftframe = Frame(root)
 # leftframe.pack(side=LEFT)
  
-# rightframe = Frame(root)
-# rightframe.pack(side=RIGHT)
+rightframe = Frame(root)
+rightframe.pack(side=RIGHT)
 
 # Main Menu
 mainmenu = Menu(root)
@@ -268,17 +269,17 @@ mainmenu.add_cascade(label = "Help", menu = helpmenu)
 
 root.config(menu = mainmenu)
 
-button = Button(frame, text = "Discharge", command = discharge)
+button = Button(rightframe, text = "Discharge", command = discharge)
 button.pack(padx = 5, pady = 0)
-button2 = Button(frame, text = "Reset", command = reset)
+button2 = Button(rightframe, text = "Reset", command = reset)
 button2.pack(padx = 5, pady = 0)
-button3 = Button(frame, text = "Short", command = short)
+button3 = Button(rightframe, text = "Short", command = short)
 button3.pack(padx = 5, pady = 0)
-button4 = Button(frame, text = "Short600V", command = short600V)
+button4 = Button(rightframe, text = "Short600V", command = short600V)
 button4.pack(padx = 5, pady = 0)
 
 
-Scala = Scale(frame, from_ = 0, to = 1000, orient = HORIZONTAL, label = "Volt 0 - 1000", resolution = "100", relief = RAISED, command = setVoltage)
+Scala = Scale(rightframe, from_ = 0, to = 1000, orient = HORIZONTAL, label = "Volt 0 - 1000", resolution = "100", relief = RAISED, command = setVoltage)
 #Scala.place(x=45, y=20)
 Scala.pack(padx = 10, pady = 15)
 
@@ -290,16 +291,16 @@ Var1 = IntVar()
 Var2 = IntVar()
 Var3 = IntVar()
 Var4 = IntVar()
-ChkBttn1 = Checkbutton(frame, text = "Option1", variable = Var1, relief = RAISED, command = chkBttn1)
+ChkBttn1 = Checkbutton(rightframe, text = "Option1", variable = Var1, relief = RAISED, command = chkBttn1)
 ChkBttn1.pack(padx = 5, pady = 0)
 
-ChkBttn2 = Checkbutton(frame, text = "Option2", variable = Var2, relief = RAISED, command = chkBttn2)
+ChkBttn2 = Checkbutton(rightframe, text = "Option2", variable = Var2, relief = RAISED, command = chkBttn2)
 ChkBttn2.pack(padx = 5, pady = 0)
 
-ChkBttn3 = Checkbutton(frame, text = "Option3", variable = Var3, relief = RAISED, command = chkBttn3)
+ChkBttn3 = Checkbutton(rightframe, text = "Option3", variable = Var3, relief = RAISED, command = chkBttn3)
 ChkBttn3.pack(padx = 5, pady = 0)
 
-ChkBttn4 = Checkbutton(frame, text = "Option4", variable = Var4, relief = RAISED, command = chkBttn4)
+ChkBttn4 = Checkbutton(rightframe, text = "Option4", variable = Var4, relief = RAISED, command = chkBttn4)
 ChkBttn4.pack(padx = 5, pady = 0)
 
 root.title("AMIBA-ALPHA") 
