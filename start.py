@@ -1,20 +1,47 @@
 from pymata_aio.pymata3 import PyMata3
 from pymata_aio.constants import Constants
 from tkinter import *
+from tkinter import ttk
 
 #board = PyMata3()
+#kolla vilken enhet som är ansluten ev rig 1+2, ev sim(lilla)
+#hdmi adapter
 
+'''
+When Volta preparing for evaluation, he can generate code snippet from the UI and save it in the format that is compatible with MS PowerPoint to be used as active link to activate simulations.
+Some kind of import of the scenario will be required for Volta to be able to use scenarios created for other training rigs. Format is not defined and can be adopted based on UI needs.
+'''
+def evrig_init():
+      msgbox.insert(INSERT,"evrig_init\n")
+      root.update()
+'''
 SENS_1_PIN = 20
 SENS_1_REF = 19
-BUTTON_PIN = 23
-BUTTON_REF = 22
-BUTTON_LED_RED = 12
-BUTTON_LED_GREEN = 13
-BUTTON_LED_BLUE = 21
-TV_REL_CTRL = 11
-TV_REL_DIR = 18
-TV_GEN_CTRL = 10
-TV_GEN_DIR = 9
+   BUTTON_PIN = 23
+   BUTTON_REF = 22
+   BUTTON_LED_RED = 12
+   BUTTON_LED_GREEN = 13
+   BUTTON_LED_BLUE = 21
+   TV_REL_CTRL = 11
+   TV_REL_DIR = 18
+   TV_GEN_CTRL = 10
+   TV_GEN_DIR = 9
+'''
+
+def evsim_init():
+   msgbox.insert(INSERT,"evsim_init\n")
+   root.update()
+   SENS_1_PIN = 20
+   SENS_1_REF = 19
+   BUTTON_PIN = 23
+   BUTTON_REF = 22
+   BUTTON_LED_RED = 12
+   BUTTON_LED_GREEN = 13
+   BUTTON_LED_BLUE = 21
+   TV_REL_CTRL = 11
+   TV_REL_DIR = 18
+   TV_GEN_CTRL = 10
+   TV_GEN_DIR = 9
 
 # board.set_pin_mode(SENS_1_PIN, Constants.INPUT)
 # board.set_pin_mode(SENS_1_REF, Constants.OUTPUT)
@@ -119,10 +146,14 @@ def reset():
    # board.sleep(2.0)
 
 def setVoltage(value):
-      
+   
    if value == '0':
+      #msgbox.insert(INSERT,"Setting voltage to 0V\n")
+      value = '60'
+      
+   if value == '60':
       # board.analog_write(TV_GEN_CTRL, 08)
-      msgbox.insert(INSERT,"Setting voltage to 0V\n")
+      msgbox.insert(INSERT,"Setting voltage to 60V\n")
       root.update()
     
    elif value == '100':
@@ -201,36 +232,49 @@ def showhelp():
    msgbox.insert(INSERT,"This software runs tests on electrical vehicle training rigs\n")
    root.update()
 
-def chkBttn1():
+def ESS_Short():
    if Var1.get() == 1:
-      msgbox.insert(INSERT,"Option 1 ON\n")
+      msgbox.insert(INSERT,"ESS_Short ON\n")
    else:
-      msgbox.insert(INSERT,"Option 1 OFF\n")
+      msgbox.insert(INSERT,"ESS_Short OFF\n")
    root.update()   
 
-def chkBttn2():
+def Contactors_Close():
    if Var2.get() == 1:
-      msgbox.insert(INSERT,"Option 1 ON\n")
+      msgbox.insert(INSERT,"Contactors_Close ON\n")
    else:
-      msgbox.insert(INSERT,"Option 1 OFF\n")
+      msgbox.insert(INSERT,"Contactors_Close OFF\n")
    root.update() 
 
-def chkBttn3():
+def OBC_Insulation():
    if Var3.get() == 1:
-      msgbox.insert(INSERT,"Option 1 ON\n")
+      msgbox.insert(INSERT,"OBC_Insulation ON\n")
    else:
-      msgbox.insert(INSERT,"Option 1 OFF\n")
+      msgbox.insert(INSERT,"OBC_Insulation OFF\n")
    root.update() 
 
-def chkBttn4():
+def HVIL_JB_Open():
    if Var4.get() == 1:
-      msgbox.insert(INSERT,"Option 1 ON\n")
+      msgbox.insert(INSERT,"HVIL_JB_Open ON\n")
    else:
-      msgbox.insert(INSERT,"Option 1 OFF\n")
+      msgbox.insert(INSERT,"HVIL_JB_Open OFF\n")
    root.update() 
 
-root = Tk()
+def HVIL_DC_Open():
+   if Var5.get() == 1:
+      msgbox.insert(INSERT,"HVIL_DC_Open ON\n")
+   else:
+      msgbox.insert(INSERT,"HVIL_DC_Open OFF\n")
+   root.update() 
 
+def retrieve():
+   rig = combo.get()
+   if rig == 'EVRIG1' or rig == 'EVRIG2':
+      evrig_init()
+   elif rig == 'EVSIM':
+      evsim_init()
+      
+root = Tk()
 root.geometry("480x640")
 frame = Frame(root)
 frame.pack()
@@ -241,67 +285,56 @@ frame.pack()
 rightframe = Frame(root)
 rightframe.pack(side=RIGHT)
 
-# Main Menu
-mainmenu = Menu(root)
+# my_entry = Entry(frame, width = 30, command = readentry)
+# # my_entry.insert(0,'EVRIG1 or EVRIG2 or EVSIM?')
+# my_entry.pack(padx = 5, pady = 5)
 
-# Menu 1
-filemenu = Menu(mainmenu, tearoff = 0)
-#filemenu.add_command(label = "Open", command = reset)
-#filemenu.add_command(label = "Save", command = reset)
-filemenu.add_separator()
-filemenu.add_command(label = "Exit", command = root.destroy)
-mainmenu.add_cascade(label = "File", menu=filemenu)
+#while True:
+vlist = ["EVRIG1", "EVRIG2", "EVSIM",]
+combo = ttk.Combobox(frame, values = vlist)
+combo.set("Choose equipment")
+combo.pack(padx = 0, pady = 0)
 
-# Menu 2
-toolmenu = Menu(mainmenu, tearoff = 0)
-toolmenu.add_command(label = "Discharge", command = discharge)
-toolmenu.add_command(label = "Reset", command = reset)
-toolmenu.add_command(label = "Short", command = short)
-toolmenu.add_command(label = "Short600V", command = short600V)
-mainmenu.add_cascade(label = "Tools", menu = toolmenu)
+button = Button(frame, text = "Submit", command = retrieve)
+button.pack(padx = 0, pady = 0)
 
-# Menu 3
-helpmenu = Menu(mainmenu, tearoff = 0)
-helpmenu.add_command(label = "Show Help", command = showhelp)
-helpmenu.add_separator()
-helpmenu.add_command(label = "About AMIBA-ALPHA", command = about)
-mainmenu.add_cascade(label = "Help", menu = helpmenu)
+button = Button(rightframe,  text = "Discharge", command = discharge)
+button.pack(padx = 5, pady = 5)
+button2 = Button(rightframe,  text = "Reset", command = reset)
+button2.pack(padx = 5, pady = 5)
+button3 = Button(rightframe,  text = "Short", command = short, justify = LEFT)
+button3.pack(padx = 5, pady = 5)
+button4 = Button(rightframe,  text = "Short600V", command = short600V, justify = LEFT)
+button4.pack(padx = 5, pady = 5)
 
-root.config(menu = mainmenu)
-
-button = Button(rightframe, text = "Discharge", command = discharge)
-button.pack(padx = 5, pady = 0)
-button2 = Button(rightframe, text = "Reset", command = reset)
-button2.pack(padx = 5, pady = 0)
-button3 = Button(rightframe, text = "Short", command = short)
-button3.pack(padx = 5, pady = 0)
-button4 = Button(rightframe, text = "Short600V", command = short600V)
-button4.pack(padx = 5, pady = 0)
-
-
-Scala = Scale(rightframe, from_ = 0, to = 1000, orient = HORIZONTAL, label = "Volt 0 - 1000", resolution = "100", relief = RAISED, command = setVoltage)
+Scala = Scale(rightframe, from_ = 0, to = 1000, orient = HORIZONTAL, label = "Volt 60 - 1000", resolution = "100", relief = RAISED, showvalue = False, command = setVoltage)
 #Scala.place(x=45, y=20)
-Scala.pack(padx = 10, pady = 15)
+Scala.pack(padx = 5, pady = 15)
+
 
 msgbox = Text(root, height = 35, width = 40)
-msgbox.place(x=20, y=20)
-#msgbox.pack()
+msgbox.place(x=20, y=40)
+msgbox.pack()
 
 Var1 = IntVar()
 Var2 = IntVar()
 Var3 = IntVar()
 Var4 = IntVar()
-ChkBttn1 = Checkbutton(rightframe, text = "Option1", variable = Var1, relief = RAISED, command = chkBttn1)
-ChkBttn1.pack(padx = 5, pady = 0)
+Var5 = IntVar()
+ChkBttn1 = Checkbutton(rightframe, text = "ESS_Short", variable = Var1, relief = RAISED, command = ESS_Short, justify = LEFT)
+ChkBttn1.pack(padx = 5, pady = 5)
 
-ChkBttn2 = Checkbutton(rightframe, text = "Option2", variable = Var2, relief = RAISED, command = chkBttn2)
-ChkBttn2.pack(padx = 5, pady = 0)
+ChkBttn2 = Checkbutton(rightframe, text = "Contactors_Close", variable = Var2, justify = LEFT, relief = RAISED, command = Contactors_Close)
+ChkBttn2.pack(padx = 5, pady = 5)
 
-ChkBttn3 = Checkbutton(rightframe, text = "Option3", variable = Var3, relief = RAISED, command = chkBttn3)
-ChkBttn3.pack(padx = 5, pady = 0)
+ChkBttn3 = Checkbutton(rightframe, text = "OBC_Insulation", variable = Var3, justify = LEFT, relief = RAISED, command = OBC_Insulation)
+ChkBttn3.pack(padx = 5, pady = 5)
 
-ChkBttn4 = Checkbutton(rightframe, text = "Option4", variable = Var4, relief = RAISED, command = chkBttn4)
+ChkBttn4 = Checkbutton(rightframe, text = "HVIL_JB_Open", variable = Var4, relief = RAISED, command = HVIL_JB_Open, justify = RIGHT)
 ChkBttn4.pack(padx = 5, pady = 0)
+
+ChkBttn5 = Checkbutton(rightframe, text = "HVIL_DC_Open", variable = Var5, relief = RAISED, command = HVIL_DC_Open, justify = LEFT)
+ChkBttn5.pack(padx = 5, pady = 5)
 
 root.title("AMIBA-ALPHA") 
 root.mainloop()
