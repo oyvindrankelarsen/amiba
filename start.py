@@ -1,16 +1,15 @@
 from pymata_aio.pymata3 import PyMata3
 from pymata_aio.constants import Constants
 from tkinter import *
-from tkinter import ttk
+#from tkinter import ttk
 
 #board = PyMata3()
-#kolla vilken enhet som är ansluten ev rig 1+2, ev sim(lilla)
-#hdmi adapter
 
 '''
 When Volta preparing for evaluation, he can generate code snippet from the UI and save it in the format that is compatible with MS PowerPoint to be used as active link to activate simulations.
 Some kind of import of the scenario will be required for Volta to be able to use scenarios created for other training rigs. Format is not defined and can be adopted based on UI needs.
 '''
+
 def evrig_init():
       msgbox.insert(INSERT,"evrig_init\n")
       root.update()
@@ -54,10 +53,6 @@ def evsim_init():
 # board.set_pin_mode(TV_REL_DIR, Constants.OUTPUT)
 # board.set_pin_mode(TV_GEN_CTRL, Constants.PWM)
 # board.set_pin_mode(TV_GEN_DIR, Constants.OUTPUT)
-
-def about():
-   msgbox.insert(INSERT,"Copyleft 2023 RC&C AB Company\n")
-   root.update()
 
 def discharge():
 
@@ -268,12 +263,49 @@ def HVIL_DC_Open():
    root.update() 
 
 def retrieve():
-   rig = combo.get()
-   if rig == 'EVRIG1' or rig == 'EVRIG2':
+   rig = my_entry.get()
+   if rig == 'SN005' or rig == 'SN006':
       evrig_init()
-   elif rig == 'EVSIM':
+      maingui()
+      submit_button.config(state=DISABLED)
+   elif rig == 'SN001':
       evsim_init()
-      
+      maingui()
+      submit_button.config(state=DISABLED)
+
+def maingui():
+   button = Button(rightframe,  text = "Discharge", command = discharge)
+   button.pack(padx = 5, pady = 5)
+   button2 = Button(rightframe,  text = "Reset", command = reset)
+   button2.pack(padx = 5, pady = 5)
+   button3 = Button(rightframe,  text = "Short", command = short, justify = LEFT)
+   button3.pack(padx = 5, pady = 5)
+   button4 = Button(rightframe,  text = "Short600V", command = short600V, justify = LEFT)
+   button4.pack(padx = 5, pady = 5)
+
+   Scala = Scale(rightframe, from_ = 0, to = 1000, orient = HORIZONTAL, label = "Volt 60 - 1000", resolution = "100", relief = RAISED, showvalue = False, command = setVoltage)
+   #Scala.place(x=45, y=20)
+   Scala.pack(padx = 5, pady = 15)
+
+   msgbox = Text(root, height = 35, width = 40)
+   msgbox.place(x=20, y=40)
+   msgbox.pack()
+
+   ChkBttn1 = Checkbutton(rightframe, text = "ESS_Short", variable = Var1, relief = RAISED, command = ESS_Short, justify = LEFT)
+   ChkBttn1.pack(padx = 5, pady = 5)
+
+   ChkBttn2 = Checkbutton(rightframe, text = "Contactors_Close", variable = Var2, justify = LEFT, relief = RAISED, command = Contactors_Close)
+   ChkBttn2.pack(padx = 5, pady = 5)
+
+   ChkBttn3 = Checkbutton(rightframe, text = "OBC_Insulation", variable = Var3, justify = LEFT, relief = RAISED, command = OBC_Insulation)
+   ChkBttn3.pack(padx = 5, pady = 5)
+
+   ChkBttn4 = Checkbutton(rightframe, text = "HVIL_JB_Open", variable = Var4, relief = RAISED, command = HVIL_JB_Open, justify = RIGHT)
+   ChkBttn4.pack(padx = 5, pady = 0)
+
+   ChkBttn5 = Checkbutton(rightframe, text = "HVIL_DC_Open", variable = Var5, relief = RAISED, command = HVIL_DC_Open, justify = LEFT)
+   ChkBttn5.pack(padx = 5, pady = 5)      
+
 root = Tk()
 root.geometry("480x640")
 frame = Frame(root)
@@ -285,56 +317,22 @@ frame.pack()
 rightframe = Frame(root)
 rightframe.pack(side=RIGHT)
 
-# my_entry = Entry(frame, width = 30, command = readentry)
-# # my_entry.insert(0,'EVRIG1 or EVRIG2 or EVSIM?')
-# my_entry.pack(padx = 5, pady = 5)
+my_entry = Entry(frame, width = 13)
+my_entry.insert(0,'')
+my_entry.pack(padx = 5, pady = 5)
 
-#while True:
-vlist = ["EVRIG1", "EVRIG2", "EVSIM",]
-combo = ttk.Combobox(frame, values = vlist)
-combo.set("Choose equipment")
-combo.pack(padx = 0, pady = 0)
-
-button = Button(frame, text = "Submit", command = retrieve)
-button.pack(padx = 0, pady = 0)
-
-button = Button(rightframe,  text = "Discharge", command = discharge)
-button.pack(padx = 5, pady = 5)
-button2 = Button(rightframe,  text = "Reset", command = reset)
-button2.pack(padx = 5, pady = 5)
-button3 = Button(rightframe,  text = "Short", command = short, justify = LEFT)
-button3.pack(padx = 5, pady = 5)
-button4 = Button(rightframe,  text = "Short600V", command = short600V, justify = LEFT)
-button4.pack(padx = 5, pady = 5)
-
-Scala = Scale(rightframe, from_ = 0, to = 1000, orient = HORIZONTAL, label = "Volt 60 - 1000", resolution = "100", relief = RAISED, showvalue = False, command = setVoltage)
-#Scala.place(x=45, y=20)
-Scala.pack(padx = 5, pady = 15)
-
-
-msgbox = Text(root, height = 35, width = 40)
-msgbox.place(x=20, y=40)
-msgbox.pack()
+submit_button = Button(frame, text = "Submit", command = retrieve)
+submit_button.pack(padx = 0, pady = 0)
 
 Var1 = IntVar()
 Var2 = IntVar()
 Var3 = IntVar()
 Var4 = IntVar()
 Var5 = IntVar()
-ChkBttn1 = Checkbutton(rightframe, text = "ESS_Short", variable = Var1, relief = RAISED, command = ESS_Short, justify = LEFT)
-ChkBttn1.pack(padx = 5, pady = 5)
 
-ChkBttn2 = Checkbutton(rightframe, text = "Contactors_Close", variable = Var2, justify = LEFT, relief = RAISED, command = Contactors_Close)
-ChkBttn2.pack(padx = 5, pady = 5)
-
-ChkBttn3 = Checkbutton(rightframe, text = "OBC_Insulation", variable = Var3, justify = LEFT, relief = RAISED, command = OBC_Insulation)
-ChkBttn3.pack(padx = 5, pady = 5)
-
-ChkBttn4 = Checkbutton(rightframe, text = "HVIL_JB_Open", variable = Var4, relief = RAISED, command = HVIL_JB_Open, justify = RIGHT)
-ChkBttn4.pack(padx = 5, pady = 0)
-
-ChkBttn5 = Checkbutton(rightframe, text = "HVIL_DC_Open", variable = Var5, relief = RAISED, command = HVIL_DC_Open, justify = LEFT)
-ChkBttn5.pack(padx = 5, pady = 5)
+msgbox = Text(root, height = 35, width = 40)
+msgbox.place(x=20, y=40)
+msgbox.pack()
 
 root.title("AMIBA-ALPHA") 
 root.mainloop()
