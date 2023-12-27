@@ -127,48 +127,58 @@ def reset():
    # board.analog_write(BUTTON_LED_GREEN, 25)    
    # board.sleep(2.0)
 
-def setVoltage(value):
+def set_voltage(value):
    if value=='0':
       # msgbox.insert(INSERT,"Setting voltage to 0V\n")
-      value='60'      
+      value='60'  
+          
    if value=='60':
       # board.analog_write(TV_GEN_CTRL, 08)
       msgbox.insert(INSERT, "Setting voltage to 60V\n")
       root.update()  
+      
    elif value=='100':
       # board.analog_write(TV_GEN_CTRL, 08)
       #msgbox.delete(DELETE)
       msgbox.insert(INSERT, "Setting voltage to 100V\n")
       root.update()
+      
    elif value=='200':
       # board.analog_write(TV_GEN_CTRL, 15)
       #msgbox.delete(1,90)
       msgbox.insert(INSERT, "Setting voltage to 200V\n")
       root.update()
+      
    elif value=='300':
       # board.analog_write(TV_GEN_CTRL, 23)
       msgbox.insert(INSERT, "Setting voltage to 300V\n")
       root.update()
+      
    elif value=='400':
       # board.analog_write(TV_GEN_CTRL, 29)
       msgbox.insert(INSERT, "Setting voltage to 400V\n")
       root.update()
+      
    elif value=='500':
       # board.analog_write(TV_GEN_CTRL, 38)
       msgbox.insert(INSERT, "Setting voltage to 500V\n")
       root.update()
+      
    elif value=='600':
       # board.analog_write(TV_GEN_CTRL, 50)
       msgbox.insert(INSERT, "Setting voltage to 600V\n")
       root.update()
+      
    elif value=='700':
       # board.analog_write(TV_GEN_CTRL, 60)
       msgbox.insert(INSERT, "Setting voltage to 700V\n")
       root.update()
+      
    elif value=='800':
       # board.analog_write(TV_GEN_CTRL, 70)
       msgbox.insert(INSERT, "Setting voltage to 800V\n")
       root.update()
+      
    elif value=='900':
       # board.analog_write(TV_GEN_CTRL, 80)
       msgbox.insert(INSERT, "Setting voltage to 900V\n")
@@ -259,7 +269,7 @@ def retrieve():
 
 def maingui():
     # Define commands and labels for buttons and checkbuttons
-    commands = [discharge, reset, short, short600V, setVoltage]
+    commands = [discharge, reset, short, short600V, set_voltage]
     labels = ["Discharge", "Reset", "Short", "Short600V", "Volt 60 - 1000"]
     variables = [var1, var2, var3, var4, var5]
     check_labels = ["ESS_Short", "Contactors_Close", "OBC_Insulation", "HVIL_JB_Open", "HVIL_DC_Open"]
