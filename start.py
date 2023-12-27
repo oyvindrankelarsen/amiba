@@ -250,59 +250,48 @@ def retrieve():
       evrig_init()
       maingui()
       submit_button.config(state=DISABLED)
+      my_entry.config(state=DISABLED)
    elif rig == 'SN001':
       evsim_init()
       maingui()
       submit_button.config(state=DISABLED)
+      my_entry.config(state=DISABLED)
 
 def maingui():
-   button = Button(right_frame, text="Discharge", command=discharge)
-   button.pack(padx=5, pady=5)
-   button2 = Button(right_frame, text="Reset", command=reset)
-   button2.pack(padx=5, pady=5)
-   button3 = Button(right_frame, text="Short", command=short, justify=LEFT)
-   button3.pack(padx=5, pady=5)
-   button4 = Button(right_frame, text="Short600V", command=short600V, justify=LEFT)
-   button4.pack(padx=5, pady=5)
+    # Define commands and labels for buttons and checkbuttons
+    commands = [discharge, reset, short, short600V, setVoltage]
+    labels = ["Discharge", "Reset", "Short", "Short600V", "Volt 60 - 1000"]
+    variables = [var1, var2, var3, var4, var5]
+    check_labels = ["ESS_Short", "Contactors_Close", "OBC_Insulation", "HVIL_JB_Open", "HVIL_DC_Open"]
+    check_commands = [ESS_Short, Contactors_Close, OBC_Insulation, HVIL_JB_Open, HVIL_DC_Open]
 
-   scala = Scale(right_frame, from_=0, to=1000, orient=HORIZONTAL, label="Volt 60 - 1000", resolution="100", relief=RAISED, showvalue=False, command=setVoltage)
-   scala.pack(padx=5, pady=15)
+    # Create buttons
+    for i in range(4):
+        button = Button(frame, text=labels[i], command=commands[i], justify=LEFT)
+        button.grid(row=i+2, column=0, padx=5, pady=5)
 
-   msgbox = Text(root, height=35, width=40)
-   msgbox.place(x=20, y=40)
-   msgbox.pack()
+    # Create scale
+    scala = Scale(frame, from_=0, to=1000, orient=HORIZONTAL, label=labels[4], resolution="100", relief=RAISED, showvalue=False, command=commands[4])
+    scala.grid(row=6, column=0, padx=5, pady=15)
 
-   ChkBttn1 = Checkbutton(right_frame, text="ESS_Short", variable=var1, relief=RAISED, command=ESS_Short, justify=LEFT)
-   ChkBttn1.pack(padx=5, pady=5)
-
-   ChkBttn2 = Checkbutton(right_frame, text="Contactors_Close", variable=var2, justify=LEFT, relief=RAISED, command=Contactors_Close)
-   ChkBttn2.pack(padx=5, pady=5)
-
-   ChkBttn3 = Checkbutton(right_frame, text="OBC_Insulation", variable=var3, justify=LEFT, relief=RAISED, command=OBC_Insulation)
-   ChkBttn3.pack(padx=5, pady=5)
-
-   ChkBttn4 = Checkbutton(right_frame, text="HVIL_JB_Open", variable=var4, relief=RAISED, command=HVIL_JB_Open, justify=RIGHT)
-   ChkBttn4.pack(padx=5, pady=0)
-
-   ChkBttn5 = Checkbutton(right_frame, text="HVIL_DC_Open", variable=var5, relief=RAISED, command=HVIL_DC_Open, justify=LEFT)
-   ChkBttn5.pack(padx=5, pady=5)      
+    # Create checkbuttons
+    for i in range(5):
+        chk_button = Checkbutton(frame, text=check_labels[i], variable=variables[i], relief=RAISED, command=check_commands[i], justify=LEFT)
+        chk_button.grid(row=i+7, column=0, padx=5, pady=5, sticky='w')
 
 root = Tk()
-root.geometry("480x640")
+root.geometry("960x1920")
 frame = Frame(root)
-frame.pack()
+frame.grid()
 
 # left_frame = Frame(root)
 # left_frame.pack(side=LEFT)
- 
-right_frame = Frame(root)
-right_frame.pack(side=RIGHT)
 
 my_entry = Entry(frame, width=13)
-my_entry.pack(padx=5, pady=5)
+my_entry.grid(row=0, column=0, padx=5, pady=5)
 
 submit_button = Button(frame, text="Submit", command=retrieve)
-submit_button.pack(padx=5, pady=5)
+submit_button.grid(row=0, column=1, padx=5, pady=5)
 
 var1 = IntVar()
 var2 = IntVar()
@@ -311,10 +300,9 @@ var4 = IntVar()
 var5 = IntVar()
 
 scrollbar = Scrollbar(root)
-scrollbar.pack(side=RIGHT, fill=Y)
-msgbox = Text(root, height=35, width=40, yscrollcommand=scrollbar.set)
-msgbox.place(x=20, y=40)
-msgbox.pack()
+scrollbar.grid(row=2, column=1, sticky='ns')
+msgbox = Text(root, height=30, width=35, yscrollcommand=scrollbar.set)
+msgbox.grid(row=2, column=0, padx=5, pady=5, sticky='nsew')
 scrollbar.config(command=msgbox.yview)
 
 root.title("AMIBA-ALPHA") 
