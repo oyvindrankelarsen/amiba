@@ -2,6 +2,7 @@ from pymata_aio.pymata3 import PyMata3
 from pymata_aio.constants import Constants
 from tkinter import *
 
+# knappar en rad och lika för checkbuttons ELLER groups för dom?
 # Python PEP8 style guide
 # board = PyMata3()
 
@@ -11,7 +12,6 @@ Some kind of import of the scenario will be required for Volta to be able to use
 '''
 
 def evrig_init():
-      msgbox.insert(INSERT, "evrig_init\n")
       root.update()
       SENS_1_PIN=20
       SENS_1_REF=19
@@ -26,7 +26,6 @@ def evrig_init():
       TV_GEN_DIR=9
 
 def evsim_init():
-   msgbox.insert(INSERT, "evsim_init\n")
    root.update()
    SENS_1_PIN=20
    SENS_1_REF=19
@@ -277,24 +276,27 @@ def main_gui():
 
     # Create buttons
     for i in range(4):
-        button = Button(frame, text=labels[i], command=commands[i], justify=LEFT)
-        button.grid(row=1+i, column=0, padx=5, pady=5)
+        button = Button(frame, text=labels[i], command=commands[i])
+        button.grid(row=2+i, column=1, padx=5, pady=5)
 
     # Create scale
     scala = Scale(frame, from_=0, to=1000, orient=HORIZONTAL, label=labels[4], resolution="100", relief=RAISED, showvalue=False, command=commands[4])
-    scala.grid(row=6, column=0, padx=5, pady=15)
+    scala.grid(row=7, column=3, padx=5, pady=15)
 
     # Create checkbuttons
     for i in range(5):
         chk_button = Checkbutton(frame, text=check_labels[i], variable=variables[i], relief=RAISED, command=check_commands[i], justify=LEFT)
-        chk_button.grid(row=7+i, column=0, padx=5, pady=5, sticky='w')
+        chk_button.grid(row=2+i, column=5, padx=5, pady=5)
+        root.update()
 
 root = Tk()
-root.geometry("720x1080")
-frame = Frame(root)
+root.geometry("507x1073")
+frame = Frame(root, bd=2)
 frame.grid()
 
-
+# Create a frame for the msgbox and scrollbar
+msgbox_frame = Frame(root)
+msgbox_frame.grid(row=1, column=0, padx=5, pady=5)  
 
 my_entry = Entry(frame, width=13)
 my_entry.grid(row=0, column=0, padx=5, pady=5)
@@ -308,11 +310,11 @@ var3 = IntVar()
 var4 = IntVar()
 var5 = IntVar()
 
-scrollbar = Scrollbar(root)
-scrollbar.grid(row=20, column=1, sticky='ns')
-msgbox = Text(root, height=30, width=35, yscrollcommand=scrollbar.set)
-msgbox.grid(row=20, column=0, padx=5, pady=5, sticky='nsew')
-scrollbar.config(command=msgbox.yview)
+scrollbar = Scrollbar(msgbox_frame)
+scrollbar.grid(row=0, column=1, sticky='ns')
+msgbox = Text(msgbox_frame, height=30, width=45, yscrollcommand=scrollbar.set)
+msgbox.grid(row=0, column=0, padx=5, pady=5)
 
+scrollbar.config(command=msgbox.yview)
 root.title("AMIBA-ALPHA") 
 root.mainloop()
