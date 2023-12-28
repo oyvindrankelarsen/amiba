@@ -219,35 +219,35 @@ def showhelp():
    msgbox.insert(INSERT, "This software runs tests on electrical vehicle training rigs\n")
    root.update()
    
-def ESS_Short():
+def ess_short():
    if var1.get() == 1:
       msgbox.insert(INSERT, "ESS_Short ON\n")
    else:
       msgbox.insert(INSERT, "ESS_Short OFF\n")
    root.update()  
     
-def Contactors_Close():
+def contactors_close():
    if var2.get() == 1:
       msgbox.insert(INSERT, "Contactors_Close ON\n")
    else:
       msgbox.insert(INSERT, "Contactors_Close OFF\n")
    root.update() 
 
-def OBC_Insulation():
+def obc_insulation():
    if var3.get() == 1:
       msgbox.insert(INSERT, "OBC_Insulation ON\n")
    else:
       msgbox.insert(INSERT, "OBC_Insulation OFF\n")
    root.update() 
 
-def HVIL_JB_Open():
+def hvil_jb_open():
    if var4.get() == 1:
       msgbox.insert(INSERT, "HVIL_JB_Open ON\n")
    else:
       msgbox.insert(INSERT, "HVIL_JB_Open OFF\n")
    root.update() 
 
-def HVIL_DC_Open():
+def hvil_dc_open():
    if var5.get() == 1:
       msgbox.insert(INSERT, "HVIL_DC_Open ON\n")
    else:
@@ -258,22 +258,22 @@ def retrieve():
    rig = my_entry.get()
    if rig == 'SN005' or rig == 'SN006':
       evrig_init()
-      maingui()
+      main_gui()
       submit_button.config(state=DISABLED)
       my_entry.config(state=DISABLED)
    elif rig == 'SN001':
       evsim_init()
-      maingui()
+      main_gui()
       submit_button.config(state=DISABLED)
       my_entry.config(state=DISABLED)
 
-def maingui():
+def main_gui():
     # Define commands and labels for buttons and checkbuttons
     commands = [discharge, reset, short, short600V, set_voltage]
     labels = ["Discharge", "Reset", "Short", "Short600V", "Volt 60 - 1000"]
     variables = [var1, var2, var3, var4, var5]
     check_labels = ["ESS_Short", "Contactors_Close", "OBC_Insulation", "HVIL_JB_Open", "HVIL_DC_Open"]
-    check_commands = [ESS_Short, Contactors_Close, OBC_Insulation, HVIL_JB_Open, HVIL_DC_Open]
+    check_commands = [ess_short, contactors_close, obc_insulation, hvil_jb_open, hvil_dc_open]
 
     # Create buttons
     for i in range(4):
@@ -293,9 +293,6 @@ root = Tk()
 root.geometry("960x1920")
 frame = Frame(root)
 frame.grid()
-
-# left_frame = Frame(root)
-# left_frame.pack(side=LEFT)
 
 my_entry = Entry(frame, width=13)
 my_entry.grid(row=0, column=0, padx=5, pady=5)
