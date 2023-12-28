@@ -256,7 +256,7 @@ def hvil_dc_open():
 
 def retrieve():
    rig = my_entry.get()
-   if rig == 'SN005' or rig == 'SN006':
+   if rig == '1' or rig == 'SN006':
       evrig_init()
       main_gui()
       submit_button.config(state=DISABLED)
@@ -278,7 +278,7 @@ def main_gui():
     # Create buttons
     for i in range(4):
         button = Button(frame, text=labels[i], command=commands[i], justify=LEFT)
-        button.grid(row=i+2, column=0, padx=5, pady=5)
+        button.grid(row=1+i, column=0, padx=5, pady=5)
 
     # Create scale
     scala = Scale(frame, from_=0, to=1000, orient=HORIZONTAL, label=labels[4], resolution="100", relief=RAISED, showvalue=False, command=commands[4])
@@ -287,12 +287,14 @@ def main_gui():
     # Create checkbuttons
     for i in range(5):
         chk_button = Checkbutton(frame, text=check_labels[i], variable=variables[i], relief=RAISED, command=check_commands[i], justify=LEFT)
-        chk_button.grid(row=i+7, column=0, padx=5, pady=5, sticky='w')
+        chk_button.grid(row=7+i, column=0, padx=5, pady=5, sticky='w')
 
 root = Tk()
-root.geometry("960x1920")
+root.geometry("720x1080")
 frame = Frame(root)
 frame.grid()
+
+
 
 my_entry = Entry(frame, width=13)
 my_entry.grid(row=0, column=0, padx=5, pady=5)
@@ -307,9 +309,9 @@ var4 = IntVar()
 var5 = IntVar()
 
 scrollbar = Scrollbar(root)
-scrollbar.grid(row=2, column=1, sticky='ns')
+scrollbar.grid(row=20, column=1, sticky='ns')
 msgbox = Text(root, height=30, width=35, yscrollcommand=scrollbar.set)
-msgbox.grid(row=2, column=0, padx=5, pady=5, sticky='nsew')
+msgbox.grid(row=20, column=0, padx=5, pady=5, sticky='nsew')
 scrollbar.config(command=msgbox.yview)
 
 root.title("AMIBA-ALPHA") 
