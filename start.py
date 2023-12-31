@@ -2,7 +2,7 @@ from pymata_aio.pymata3 import PyMata3
 from pymata_aio.constants import Constants
 from tkinter import *
 
-# knappar en rad och lika för checkbuttons ELLER groups för dom?
+# try: ... except error:
 # Python PEP8 style guide
 # board = PyMata3()
 
@@ -12,21 +12,19 @@ Some kind of import of the scenario will be required for Volta to be able to use
 '''
 
 def evrig_init():
-      root.update()
-      SENS_1_PIN=20
-      SENS_1_REF=19
-      BUTTON_PIN=23
-      BUTTON_REF=22
-      BUTTON_LED_RED=12
-      BUTTON_LED_GREEN=13
-      BUTTON_LED_BLUE=21
-      TV_REL_CTRL=11
-      TV_REL_DIR=18
-      TV_GEN_CTRL=10
-      TV_GEN_DIR=9
+   SENS_1_PIN=20
+   SENS_1_REF=19
+   BUTTON_PIN=23
+   BUTTON_REF=22
+   BUTTON_LED_RED=12
+   BUTTON_LED_GREEN=13
+   BUTTON_LED_BLUE=21
+   TV_REL_CTRL=11
+   TV_REL_DIR=18
+   TV_GEN_CTRL=10
+   TV_GEN_DIR=9
 
 def evsim_init():
-   root.update()
    SENS_1_PIN=20
    SENS_1_REF=19
    BUTTON_PIN=23
@@ -52,7 +50,6 @@ def evsim_init():
 
 def discharge():
    msgbox.insert(INSERT, "300V DC Residual Voltage ON \n")
-   root.update()
    # board.digital_write(TV_REL_DIR, 1)
    # board.digital_write(TV_GEN_DIR, 0)
    # board.digital_write(TV_REL_CTRL, 0)
@@ -113,8 +110,7 @@ def discharge():
    # board.analog_write(BUTTON_LED_GREEN, 88)
 
 def reset():
-   msgbox.insert(INSERT, "Reset\n")
-   root.update()    
+   msgbox.insert(INSERT, "Reset\n") 
    # board.digital_write(TV_REL_DIR, 1)
    # board.digital_write(TV_GEN_DIR, 0)
    # board.digital_write(TV_REL_CTRL, 0)
@@ -189,7 +185,6 @@ def set_voltage(value):
 
 def short():
    msgbox.insert(INSERT, "Short\n")
-   root.update()
    #print("Short")
    # board.digital_write(TV_REL_DIR, 1)
    # board.digital_write(TV_GEN_DIR, 0)
@@ -201,8 +196,7 @@ def short():
    # board.sleep(2.0)
 
 def short600V():
-      msgbox.insert(INSERT, "Short600V\n")
-      root.update()  
+      msgbox.insert(INSERT, "Short600V\n") 
    #print("Short600V")
    # board.digital_write(TV_REL_DIR, 1)
    # board.digital_write(TV_GEN_DIR, 0)
@@ -254,67 +248,68 @@ def hvil_dc_open():
    root.update() 
 
 def retrieve():
-   rig = my_entry.get()
+   rig = rig_entry.get()
    if rig == '1' or rig == 'SN006':
       evrig_init()
-      main_gui()
       submit_button.config(state=DISABLED)
-      my_entry.config(state=DISABLED)
+      rig_entry.config(state=DISABLED)
+      maingui()
    elif rig == 'SN001':
       evsim_init()
-      main_gui()
-      submit_button.config(state=DISABLED)
-      my_entry.config(state=DISABLED)
+      submit_button.state(['disabled'])
+      maingui()
 
-def main_gui():
-    # Define commands and labels for buttons and checkbuttons
-    commands = [discharge, reset, short, short600V, set_voltage]
-    labels = ["Discharge", "Reset", "Short", "Short600V", "Volt 60 - 1000"]
-    variables = [var1, var2, var3, var4, var5]
-    check_labels = ["ESS_Short", "Contactors_Close", "OBC_Insulation", "HVIL_JB_Open", "HVIL_DC_Open"]
-    check_commands = [ess_short, contactors_close, obc_insulation, hvil_jb_open, hvil_dc_open]
+def maingui():
+   
+   # Create buttons 
+   button_discharge = Button(mainframe, text="Discharge", command=discharge)
+   button_discharge.grid(row=2, column=0, padx=5, pady=5, sticky=W)
+   button_reset = Button(mainframe, text="Reset", command=reset)
+   button_reset.grid(row=3, column=0, padx=5, pady=5, sticky=W)
+   button_short = Button(mainframe, text="Short", command=short)
+   button_short.grid(row=4, column=0, padx=5, pady=5, sticky=W)
+   button_short600V = Button(mainframe, text="short600V", command=short600V)
+   button_short600V.grid(row=5, column=0, padx=5, pady=5, sticky=W)     
 
-    # Create buttons
-    for i in range(4):
-        button = Button(frame, text=labels[i], command=commands[i])
-        button.grid(row=2+i, column=1, padx=5, pady=5)
+   # Create scale
+   scala = Scale(mainframe, from_=0, to=1000, orient=HORIZONTAL, label="Volt 60 - 1000", resolution="100", relief=RAISED, showvalue=False, command=set_voltage)
+   scala.grid(row=8, column=0, padx=5, pady=5, sticky=W)
 
-    # Create scale
-    scala = Scale(frame, from_=0, to=1000, orient=HORIZONTAL, label=labels[4], resolution="100", relief=RAISED, showvalue=False, command=commands[4])
-    scala.grid(row=7, column=3, padx=5, pady=15)
-
-    # Create checkbuttons
-    for i in range(5):
-        chk_button = Checkbutton(frame, text=check_labels[i], variable=variables[i], relief=RAISED, command=check_commands[i], justify=LEFT)
-        chk_button.grid(row=2+i, column=5, padx=5, pady=5)
-        root.update()
-
+   # Create checkbuttons
+   chk_button = Checkbutton(mainframe, text="ESS_Short", variable=var1, command=ess_short)
+   chk_button.grid(row=10, column=0, padx=5, pady=5, sticky=W)
+   chk_button = Checkbutton(mainframe, text="Contactors_Close", variable=var2, command=contactors_close)
+   chk_button.grid(row=11, column=0, padx=5, pady=5, sticky=W)
+   chk_button = Checkbutton(mainframe, text="OBC_Insulation", variable=var3, command=obc_insulation)
+   chk_button.grid(row=12, column=0, padx=5, pady=5, sticky=W)
+   chk_button = Checkbutton(mainframe, text="HVIL_JB_Open", variable=var4, command=hvil_jb_open)
+   chk_button.grid(row=13, column=0, padx=5, pady=5, sticky=W)
+   chk_button = Checkbutton(mainframe, text="HVIL_DC_Open", variable=var5, command=hvil_dc_open)
+   chk_button.grid(row=14, column=0, padx=5, pady=5, sticky=W)      
+  
 root = Tk()
-root.geometry("507x1073")
-frame = Frame(root, bd=2)
-frame.grid()
+root.title("AMIBA-ALPHA") 
+mainframe = Frame(root)
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+rig_entry = Entry(mainframe, width=13)
+rig_entry.grid(row=0, column=0, padx=5, pady=5, sticky=NW)
 
-# Create a frame for the msgbox and scrollbar
-msgbox_frame = Frame(root)
-msgbox_frame.grid(row=1, column=0, padx=5, pady=5)  
+submit_button = Button(mainframe, text="Submit", command=retrieve)
+submit_button.grid(row=0, column=0, padx=5, pady=5, sticky=N)
+#button_style = Style()
+scrollbar = Scrollbar(mainframe)
+scrollbar.grid(row=15, column=1, sticky=NS)
+msgbox = Text(mainframe, height=30, width=45, yscrollcommand=scrollbar.set)
+msgbox.grid(row=15, column=0, padx=5, pady=5)
+scrollbar.config(command=msgbox.yview)
 
-my_entry = Entry(frame, width=13)
-my_entry.grid(row=0, column=0, padx=5, pady=5)
-
-submit_button = Button(frame, text="Submit", command=retrieve)
-submit_button.grid(row=0, column=1, padx=5, pady=5)
-
+rig_entry.focus()
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
 var4 = IntVar()
 var5 = IntVar()
+root.mainloop()    
 
-scrollbar = Scrollbar(msgbox_frame)
-scrollbar.grid(row=0, column=1, sticky='ns')
-msgbox = Text(msgbox_frame, height=30, width=45, yscrollcommand=scrollbar.set)
-msgbox.grid(row=0, column=0, padx=5, pady=5)
-
-scrollbar.config(command=msgbox.yview)
-root.title("AMIBA-ALPHA") 
-root.mainloop()
