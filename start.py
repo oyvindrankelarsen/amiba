@@ -288,6 +288,8 @@ def maingui():
    chk_button.grid(row=15, column=0, padx=5, pady=5, sticky=W)      
   
 root = Tk()
+img = PhotoImage(file='favicon.png')
+root.iconphoto(False, img)
 root.title("AMIBA-ALPHA") 
 mainframe = Frame(root)
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
