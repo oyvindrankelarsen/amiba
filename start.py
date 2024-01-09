@@ -2,29 +2,42 @@ from pymata_aio.pymata3 import PyMata3
 from pymata_aio.constants import Constants
 from tkinter import *
 
-# board = PyMata3()
+board = PyMata3()
+SENS_1_PIN=20
+SENS_1_REF=19
+BUTTON_PIN=23
+BUTTON_REF=22
+BUTTON_LED_RED=12
+BUTTON_LED_GREEN=13
+BUTTON_LED_BLUE=21
+TV_REL_CTRL=11
+TV_REL_DIR=18
+TV_GEN_CTRL=10
+TV_GEN_DIR=9
 
 # Initializing the big rigs: SN005 and SN006
 def evrig_init():
     SENS_1_PIN=20
-    SENS_1_REF=19
-    BUTTON_PIN=23
-    BUTTON_REF=22
-    BUTTON_LED_RED=12
-    BUTTON_LED_GREEN=13
-    BUTTON_LED_BLUE=21
-    TV_REL_CTRL=11
-    TV_REL_DIR=18
-    TV_GEN_CTRL=10
-    TV_GEN_DIR=9
+   #  SENS_1_REF=19
+   #  HVIL_DC_PIN1=7
+   #  HVIL_DC_PIN2=8
+   #  HVIL_JB_PIN1=4
+   #  HVIL_JB_PIN2=12
+   #  TV_OBC_CTRL=5
+   #  TV_CON_CTRL=6
+   #  TV_REL_CTRL=11
+   #  TV_REL_DIR=18
+   #  TV_GEN_CTRL=10
+   #  TV_GEN_DIR=9
 
-   #  board.set_pin_mode(SENS_1_PIN, Constants.INPUT)
+    #  board.set_pin_mode(SENS_1_PIN, Constants.INPUT)
    #  board.set_pin_mode(SENS_1_REF, Constants.OUTPUT)
-   #  board.set_pin_mode(BUTTON_PIN, Constants.INPUT)
-   #  board.set_pin_mode(BUTTON_REF, Constants.OUTPUT)
-   #  board.set_pin_mode(BUTTON_LED_RED, Constants.OUTPUT)
-   #  board.set_pin_mode(BUTTON_LED_GREEN, Constants.PWM)
-   #  board.set_pin_mode(BUTTON_LED_BLUE, Constants.OUTPUT)
+   #  board.set_pin_mode(HVIL_DC_PIN1, Constants.OUTPUT)
+   #  board.set_pin_mode(HVIL_DC_PIN2, Constants.OUTPUT)
+   #  board.set_pin_mode(HVIL_JB_PIN1, Constants.OUTPUT)
+   #  board.set_pin_mode(HVIL_JB_PIN2, Constants.OUTPUT)
+   #  board.set_pin_mode(TV_OBC_CTRL, Constants.OUTPUT)
+   #  board.set_pin_mode(TV_CON_CTRL, Constants.OUTPUT)
    #  board.set_pin_mode(TV_REL_CTRL, Constants.OUTPUT)
    #  board.set_pin_mode(TV_REL_DIR, Constants.OUTPUT)
    #  board.set_pin_mode(TV_GEN_CTRL, Constants.PWM)
@@ -136,60 +149,59 @@ def reset():
 # Sets the voltage between 60 and 100 volt
 def set_voltage(value):
     if value=='0':
-       # msgbox.insert(INSERT,"Setting voltage to 0V\n")
        value='60'  
           
     if value=='60':
-       # board.analog_write(TV_GEN_CTRL, 08)
+       board.analog_write(TV_GEN_CTRL, 10)
        msgbox.insert(INSERT, "Setting voltage to 60V\n")
        root.update()  
       
     elif value=='100':
-         # board.analog_write(TV_GEN_CTRL, 08)
+         board.analog_write(TV_GEN_CTRL, 14)
          msgbox.insert(INSERT, "Setting voltage to 100V\n")
          root.update()
       
     elif value=='200':
-         # board.analog_write(TV_GEN_CTRL, 15)
+         board.analog_write(TV_GEN_CTRL, 18)
          msgbox.insert(INSERT, "Setting voltage to 200V\n")
          root.update()
       
     elif value=='300':
-         # board.analog_write(TV_GEN_CTRL, 23)
+         board.analog_write(TV_GEN_CTRL, 23)
          msgbox.insert(INSERT, "Setting voltage to 300V\n")
          root.update()
       
     elif value=='400':
-         # board.analog_write(TV_GEN_CTRL, 29)
+         board.analog_write(TV_GEN_CTRL, 29)
          msgbox.insert(INSERT, "Setting voltage to 400V\n")
          root.update()
       
     elif value=='500':
-         # board.analog_write(TV_GEN_CTRL, 38)
+         board.analog_write(TV_GEN_CTRL, 38)
          msgbox.insert(INSERT, "Setting voltage to 500V\n")
          root.update()
       
     elif value=='600':
-         # board.analog_write(TV_GEN_CTRL, 50)
+         board.analog_write(TV_GEN_CTRL, 50)
          msgbox.insert(INSERT, "Setting voltage to 600V\n")
          root.update()
       
     elif value=='700':
-         # board.analog_write(TV_GEN_CTRL, 60)
+         board.analog_write(TV_GEN_CTRL, 60)
          msgbox.insert(INSERT, "Setting voltage to 700V\n")
          root.update()
       
     elif value=='800':
-         # board.analog_write(TV_GEN_CTRL, 70)
+         board.analog_write(TV_GEN_CTRL, 70)
          msgbox.insert(INSERT, "Setting voltage to 800V\n")
          root.update()
       
     elif value=='900':
-         # board.analog_write(TV_GEN_CTRL, 80)
+         board.analog_write(TV_GEN_CTRL, 80)
          msgbox.insert(INSERT, "Setting voltage to 900V\n")
          root.update()
     elif value=='1000':
-         # board.analog_write(TV_GEN_CTRL, 90)
+         board.analog_write(TV_GEN_CTRL, 90)
          msgbox.insert(INSERT, "Setting voltage to 1000V\n")
          root.update()
 
@@ -215,45 +227,54 @@ def short600V():
     # board.digital_write(BUTTON_LED_RED, 1)
     
     # board.sleep(2.0)  
+       
+# def ess_short():
+#     if var1.get() == 1:
+#        msgbox.insert(INSERT, "ESS_Short ON\n")
+#     else:
+#        msgbox.insert(INSERT, "ESS_Short OFF\n")
+#     root.update()  
     
-def showhelp():
-    msgbox.insert(INSERT, "This software runs tests on electrical vehicle training rigs\n")
-    root.update()
-   
-def ess_short():
-    if var1.get() == 1:
-       msgbox.insert(INSERT, "ESS_Short ON\n")
-    else:
-       msgbox.insert(INSERT, "ESS_Short OFF\n")
-    root.update()  
-    
-def contactors_close():
-    if var2.get() == 1:
-       msgbox.insert(INSERT, "Contactors_Close ON\n")
-    else:
-       msgbox.insert(INSERT, "Contactors_Close OFF\n")
-    root.update() 
+# def contactors_close():
+#     if var2.get() == 1:
+#        TV_CON_CTRL=6 (HIGH)
+#        msgbox.insert(INSERT, "Contactors_Close ON\n")
+#     else:
+#        TV_CON_CTRL=6 (LOW)
+#        msgbox.insert(INSERT, "Contactors_Close OFF\n")
+#     root.update() 
 
-def obc_insulation():
-    if var3.get() == 1:
-       msgbox.insert(INSERT, "OBC_Insulation ON\n")
-    else:
-       msgbox.insert(INSERT, "OBC_Insulation OFF\n")
-    root.update() 
+# def obc_insulation():
+#     if var3.get() == 1:
+#        TV_OBC_CTRL=5 (HIGH)
+#        msgbox.insert(INSERT, "OBC_Insulation ON\n")
+#     else:
+#        TV_OBC_CTRL=5 (LOW)
+#        msgbox.insert(INSERT, "OBC_Insulation OFF\n")
+#     root.update() 
 
-def hvil_jb_open():
-    if var4.get() == 1:
-       msgbox.insert(INSERT, "HVIL_JB_Open ON\n")
-    else:
-       msgbox.insert(INSERT, "HVIL_JB_Open OFF\n")
-    root.update() 
+# def hvil_jb_open():
+#     if var4.get() == 1:
+#        HVIL_JB_PIN1=4  (HIGH for 1s and back to LOW as normal state)
+#        HVIL_JB_PIN2=12 (LOW)
+#        msgbox.insert(INSERT, "HVIL_JB_Open ON\n")
+#     else:
+#        HVIL_JB_PIN1=4 (LOW)
+#        HVIL_JB_PIN2=12 (HIGH for 1s and back to LOW as normal state)
+#        msgbox.insert(INSERT, "HVIL_JB_Open OFF\n")
+#     root.update() 
 
-def hvil_dc_open():
-    if var5.get() == 1:
-       msgbox.insert(INSERT, "HVIL_DC_Open ON\n")
-    else:
-       msgbox.insert(INSERT, "HVIL_DC_Open OFF\n")
-    root.update() 
+# def hvil_dc_open():
+#     if var5.get() == 1:
+#        HVIL_DC_PIN1=7
+#        # board.sleep(1.0)
+#        HVIL_DC_PIN2=8 (LOW)
+#        msgbox.insert(INSERT, "HVIL_DC_Open ON\n")
+#     else:
+#        HVIL_DC_PIN1=7  (LOW)
+#        HVIL_DC_PIN2=8
+#        msgbox.insert(INSERT, "HVIL_DC_Open OFF\n")
+#     root.update() 
 
 # Gets the value for the chosen rig
 def retrieve():
