@@ -5,146 +5,133 @@ from tkinter import *
 board = PyMata3()
 SENS_1_PIN=20
 SENS_1_REF=19
+TV_REL_CTRL=11
+TV_REL_DIR=18
+TV_GEN_CTRL=10
+TV_GEN_DIR=9
 BUTTON_PIN=23
 BUTTON_REF=22
 BUTTON_LED_RED=12
 BUTTON_LED_GREEN=13
 BUTTON_LED_BLUE=21
-TV_REL_CTRL=11
-TV_REL_DIR=18
-TV_GEN_CTRL=10
-TV_GEN_DIR=9
+HVIL_DC_PIN1=7
+HVIL_DC_PIN2=8
+HVIL_JB_PIN1=4
+HVIL_JB_PIN2=12
+TV_OBC_CTRL=5
+TV_CON_CTRL=6
 
 # Initializing the big rigs: SN005 and SN006
 def evrig_init():
-    SENS_1_PIN=20
-   #  SENS_1_REF=19
-   #  HVIL_DC_PIN1=7
-   #  HVIL_DC_PIN2=8
-   #  HVIL_JB_PIN1=4
-   #  HVIL_JB_PIN2=12
-   #  TV_OBC_CTRL=5
-   #  TV_CON_CTRL=6
-   #  TV_REL_CTRL=11
-   #  TV_REL_DIR=18
-   #  TV_GEN_CTRL=10
-   #  TV_GEN_DIR=9
-
-    #  board.set_pin_mode(SENS_1_PIN, Constants.INPUT)
-   #  board.set_pin_mode(SENS_1_REF, Constants.OUTPUT)
-   #  board.set_pin_mode(HVIL_DC_PIN1, Constants.OUTPUT)
-   #  board.set_pin_mode(HVIL_DC_PIN2, Constants.OUTPUT)
-   #  board.set_pin_mode(HVIL_JB_PIN1, Constants.OUTPUT)
-   #  board.set_pin_mode(HVIL_JB_PIN2, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_OBC_CTRL, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_CON_CTRL, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_REL_CTRL, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_REL_DIR, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_GEN_CTRL, Constants.PWM)
-   #  board.set_pin_mode(TV_GEN_DIR, Constants.OUTPUT)
+    board.set_pin_mode(SENS_1_PIN, Constants.INPUT)
+    board.set_pin_mode(SENS_1_REF, Constants.OUTPUT)
+    board.set_pin_mode(HVIL_DC_PIN1, Constants.OUTPUT)
+    board.set_pin_mode(HVIL_DC_PIN2, Constants.OUTPUT)
+    board.set_pin_mode(HVIL_JB_PIN1, Constants.OUTPUT)
+    board.set_pin_mode(HVIL_JB_PIN2, Constants.OUTPUT)
+    board.set_pin_mode(TV_OBC_CTRL, Constants.OUTPUT)
+    board.set_pin_mode(TV_CON_CTRL, Constants.OUTPUT)
+    board.set_pin_mode(TV_REL_CTRL, Constants.OUTPUT)
+    board.set_pin_mode(TV_REL_DIR, Constants.OUTPUT)
+    board.set_pin_mode(TV_GEN_CTRL, Constants.PWM)
+    board.set_pin_mode(TV_GEN_DIR, Constants.OUTPUT)
 
 # Initializing the small rig: SN001
 def evsim_init():
-    SENS_1_PIN=20
-    SENS_1_REF=19
-    BUTTON_PIN=23
-    BUTTON_REF=22
-    BUTTON_LED_RED=12
-    BUTTON_LED_GREEN=13
-    BUTTON_LED_BLUE=21
-    TV_REL_CTRL=11
-    TV_REL_DIR=18
-    TV_GEN_CTRL=10
-    TV_GEN_DIR=9
-    
-   #  board.set_pin_mode(SENS_1_PIN, Constants.INPUT)
-   #  board.set_pin_mode(SENS_1_REF, Constants.OUTPUT)
-   #  board.set_pin_mode(BUTTON_PIN, Constants.INPUT)
-   #  board.set_pin_mode(BUTTON_REF, Constants.OUTPUT)
-   #  board.set_pin_mode(BUTTON_LED_RED, Constants.OUTPUT)
-   #  board.set_pin_mode(BUTTON_LED_GREEN, Constants.PWM)
-   #  board.set_pin_mode(BUTTON_LED_BLUE, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_REL_CTRL, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_REL_DIR, Constants.OUTPUT)
-   #  board.set_pin_mode(TV_GEN_CTRL, Constants.PWM)
-   #  board.set_pin_mode(TV_GEN_DIR, Constants.OUTPUT)
+    board.set_pin_mode(SENS_1_PIN, Constants.INPUT)
+    board.set_pin_mode(SENS_1_REF, Constants.OUTPUT)
+    board.set_pin_mode(BUTTON_PIN, Constants.INPUT)
+    board.set_pin_mode(BUTTON_REF, Constants.OUTPUT)
+    board.set_pin_mode(BUTTON_LED_RED, Constants.OUTPUT)
+    board.set_pin_mode(BUTTON_LED_GREEN, Constants.PWM)
+    board.set_pin_mode(BUTTON_LED_BLUE, Constants.OUTPUT)
+    board.set_pin_mode(TV_REL_CTRL, Constants.OUTPUT)
+    board.set_pin_mode(TV_REL_DIR, Constants.OUTPUT)
+    board.set_pin_mode(TV_GEN_CTRL, Constants.PWM)
+    board.set_pin_mode(TV_GEN_DIR, Constants.OUTPUT)
 
 # Step by step reduction of the voltage
 def discharge():
     msgbox.insert(INSERT, "300V DC Residual Voltage ON \n")
-   #  board.digital_write(TV_REL_DIR, 1)
-   #  board.digital_write(TV_GEN_DIR, 0)
-   #  board.digital_write(TV_REL_CTRL, 0)
-   #  board.analog_write(TV_GEN_CTRL, 21)
-   #  board.digital_write(SENS_1_REF, 1)
-   #  board.digital_write(BUTTON_REF, 1)
-   #  board.digital_write(BUTTON_LED_RED, 1)    
-   #  board.sleep(5.0)  
+    board.digital_write(TV_REL_DIR, 1)
+    board.digital_write(TV_GEN_DIR, 0)
+    board.digital_write(TV_REL_CTRL, 0)
+    board.analog_write(TV_GEN_CTRL, 21)
+    board.digital_write(SENS_1_REF, 1)
+    board.digital_write(BUTTON_REF, 1)
+    board.digital_write(BUTTON_LED_RED, 1)    
+    board.sleep(5.0)  
     msgbox.insert(INSERT, "Residual discharge -ACTIVE-\n")    
-   #  board.digital_write(BUTTON_LED_RED, 0)
-   #  board.digital_write(BUTTON_LED_BLUE, 1)
-   #  board.analog_write(BUTTON_LED_GREEN, 0)
-   #  board.analog_write(TV_GEN_CTRL, 21)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 20)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 19)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 18)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 17)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 16)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 15)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 14)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 13)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 12)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 11)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 10)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 9)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 8)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 7)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 6)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 5)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 4)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 3)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 2)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 1)
-   #  board.sleep(3)
-   #  board.analog_write(TV_GEN_CTRL, 0)
-   #  board.digital_write(BUTTON_LED_RED, 0)
-   #  board.digital_write(BUTTON_LED_BLUE, 0)
-   #  board.analog_write(BUTTON_LED_GREEN, 88)
+    board.digital_write(BUTTON_LED_RED, 0)
+    board.digital_write(BUTTON_LED_BLUE, 1)
+    board.analog_write(BUTTON_LED_GREEN, 0)
+    board.analog_write(TV_GEN_CTRL, 21)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 20)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 19)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 18)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 17)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 16)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 15)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 14)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 13)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 12)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 11)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 10)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 9)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 8)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 7)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 6)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 5)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 4)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 3)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 2)
+    board.sleep(3)
+    board.analog_write(TV_GEN_CTRL, 1)
+    board.sleep(3)
+    
+    if rig =='SN001':
+       board.analog_write(TV_GEN_CTRL, 0)
+       board.digital_write(BUTTON_LED_RED, 0)
+       board.digital_write(BUTTON_LED_BLUE, 0)
+       board.analog_write(BUTTON_LED_GREEN, 88)
+
     msgbox.insert(INSERT, "Residual discharge -DONE-\n")   
 
 # Resetting the pins
 def reset():
     msgbox.insert(INSERT, "Reset\n") 
-   #  board.digital_write(TV_REL_DIR, 1)
-   #  board.digital_write(TV_GEN_DIR, 0)
-   #  board.digital_write(TV_REL_CTRL, 0)
-   #  board.analog_write(TV_GEN_CTRL, 0)
-   #  board.digital_write(SENS_1_REF, 1)
-   #  board.digital_write(BUTTON_REF, 1)
-   #  board.digital_write(BUTTON_LED_RED, 0)
-   #  board.digital_write(BUTTON_LED_BLUE, 0)
-   #  board.analog_write(BUTTON_LED_GREEN, 25)    
-   #  board.sleep(2.0)
+    board.digital_write(TV_REL_DIR, 1)
+    board.digital_write(TV_GEN_DIR, 0)
+    board.digital_write(TV_REL_CTRL, 0)
+    board.analog_write(TV_GEN_CTRL, 0)
+    board.digital_write(SENS_1_REF, 1)
+    
+    if rig =='SN001':
+       board.digital_write(BUTTON_REF, 1)
+       board.digital_write(BUTTON_LED_RED, 0)
+       board.digital_write(BUTTON_LED_BLUE, 0)
+       board.analog_write(BUTTON_LED_GREEN, 25)    
+    
+    board.sleep(2.0)
 
 # Sets the voltage between 60 and 100 volt
 def set_voltage(value):
@@ -207,27 +194,31 @@ def set_voltage(value):
 
 def short():
     msgbox.insert(INSERT, "Short\n")
-    # board.digital_write(TV_REL_DIR, 1)
-    # board.digital_write(TV_GEN_DIR, 0)
-    # board.digital_write(TV_REL_CTRL, 1)
-    # board.analog_write(TV_GEN_CTRL, 0)
-    # board.digital_write(SENS_1_REF, 1)
-    # board.digital_write(BUTTON_REF, 1)
-    # board.digital_write(BUTTON_LED_RED, 1)    
-    # board.sleep(2.0)
+    board.digital_write(TV_REL_DIR, 1)
+    board.digital_write(TV_GEN_DIR, 0)
+    board.digital_write(TV_REL_CTRL, 1)
+    board.analog_write(TV_GEN_CTRL, 0)
+    board.digital_write(SENS_1_REF, 1)
+    
+    if rig =='SN001':
+       board.digital_write(BUTTON_REF, 1)
+       board.digital_write(BUTTON_LED_RED, 1)    
+    board.sleep(2.0)
 
 def short600V():
     msgbox.insert(INSERT, "Short600V\n") 
-    # board.digital_write(TV_REL_DIR, 1)
-    # board.digital_write(TV_GEN_DIR, 0)
-    # board.digital_write(TV_REL_CTRL, 1)
-    # board.analog_write(TV_GEN_CTRL, 50)
-    # board.digital_write(SENS_1_REF, 1)
-    # board.digital_write(BUTTON_REF, 1)
-    # board.digital_write(BUTTON_LED_RED, 1)
+    board.digital_write(TV_REL_DIR, 1)
+    board.digital_write(TV_GEN_DIR, 0)
+    board.digital_write(TV_REL_CTRL, 1)
+    board.analog_write(TV_GEN_CTRL, 50)
+    board.digital_write(SENS_1_REF, 1)
     
-    # board.sleep(2.0)  
+    if rig =='SN001':
+       board.digital_write(BUTTON_REF, 1)
+       board.digital_write(BUTTON_LED_RED, 1) 
+    board.sleep(2.0)  
        
+# For these check if rig == 'SN005' or rig == 'SN006':
 # def ess_short():
 #     if var1.get() == 1:
 #        msgbox.insert(INSERT, "ESS_Short ON\n")
@@ -294,6 +285,7 @@ def retrieve():
          rig_entry.config(state=DISABLED)
          maingui()
 
+# The function creates the graphical user interface
 def maingui():
     # Create buttons 
     button_discharge = Button(mainframe, text="Discharge", command=discharge)
@@ -305,7 +297,7 @@ def maingui():
     button_short600V = Button(mainframe, text="Short600V", command=short600V)
     button_short600V.grid(row=5, column=0, padx=5, pady=5, sticky=W)     
 
-    # Create scale
+    # Create scale for setting the voltage
     scala = Scale(mainframe, from_=0, to=1000, orient=HORIZONTAL, label="60V - 1000V", resolution="100", relief=RAISED, showvalue=False, command=set_voltage)
     scala.grid(row=6, column=0, padx=5, pady=5, sticky=W)
 
@@ -340,6 +332,7 @@ msgbox = Text(mainframe, height=30, width=30, yscrollcommand=scrollbar.set)
 msgbox.grid(row=16, column=0, padx=5, pady=5)
 scrollbar.config(command=msgbox.yview)
 
+rig = ''
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
